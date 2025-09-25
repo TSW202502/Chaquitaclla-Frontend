@@ -1,3 +1,4 @@
+
 import { createApp } from 'vue'
 import './style.css'
 import App from './app.vue'
@@ -8,9 +9,6 @@ import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import Card from "primevue/card";
-import VueBarGraph from 'vue-bar-graph';
-import VueApexCharts from 'vue3-apexcharts'
-import ApexCharts from 'apexcharts'
 
 import Aura from '@primeuix/themes/aura'
 import 'primeicons/primeicons.css'
@@ -44,6 +42,7 @@ import Divider from "primevue/divider";
 import SelectButton from "primevue/selectbutton";
 import Password from "primevue/password";
 import i18n from "./i18n.js";
+import VueApexCharts from 'vue3-apexcharts';
 
 createApp(App)
     .use(router)
@@ -66,7 +65,6 @@ createApp(App)
     .component('pv-input-text', InputText)
     .component('pv-divider', Divider)
     .component('pv-card', Card)
-    .component('pv-bar-graph',VueBarGraph)
     .component('pv-data-table', DataTable)
     .component('pv-column', Column)
     .component('pv-confirm-dialog', ConfirmDialog)
