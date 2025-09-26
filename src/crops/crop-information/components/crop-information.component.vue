@@ -14,4 +14,9 @@ export default {
   </div>
 
 </template>
+<style scoped>
+.toolbar {
+  margin-bottom: 100px;
+}
+</style>
 
