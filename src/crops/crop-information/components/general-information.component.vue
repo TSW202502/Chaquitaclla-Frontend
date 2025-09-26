@@ -83,6 +83,12 @@ export default {
   background-color: #005f40;
   color: white;
 }
-
+.description{
+  background-color: #005f40;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  border-radius: 5px;
+}
 
 </style>
