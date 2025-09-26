@@ -34,3 +34,36 @@ export default {
     <div class="line"></div>
   </div>
 </template>
+
+<style scoped>
+.container {
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 50px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+button {
+  margin: 0 20px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+button.active {
+  background-color: #005f40;
+  color: white;
+}
+.line{
+  width: 100%;
+  height: 1px;
+  background: black;
+}
+</style>
