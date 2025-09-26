@@ -27,4 +27,20 @@ export default {
   </div>
 </template>
 
+<style scoped>
+div{
+  display: flex;
+
+}
+
+.calendar{
+  margin-right: 100px;
+}
+
+.table{
+  margin-left: 100px;
+  min-width: 500px;
+}
+</style>
+
 
