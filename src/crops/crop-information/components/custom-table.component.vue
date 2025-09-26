@@ -55,6 +55,8 @@ export default {
   background-color: #f0f0f0;
   border-radius: 10px;
 }
-
+.custom-table-row:not(:last-child) {
+  margin-bottom: 10px;
+}
 
 </style>
