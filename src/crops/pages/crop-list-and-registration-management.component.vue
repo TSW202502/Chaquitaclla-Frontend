@@ -56,7 +56,6 @@ export default {
   methods: {
     async reloadData() {
       try {
-        // Usa getAllFalse solo si tu backend lo soporta; si no, cámbialo por getAll()
         const response = await this.sowingService.getAllFalse();
         console.log("Raw sowings data:", response?.data);
         const rawList = toArray(response?.data);
@@ -148,21 +147,19 @@ export default {
       this.sowing.user_id = 1;
 
       const ensureCropId = async () => {
-        // si ya viene id (por si fuese objeto), úsalo
         const currentId =
             (typeof this.sowing?.crop_name === "object" && this.sowing.crop_name?.id)
                 ? this.sowing.crop_name.id
                 : this.sowing?.crop_id;
         if (currentId) return currentId;
 
-        // si viene nombre (string u objeto), crea el crop
         const name =
             typeof this.sowing?.crop_name === "object"
                 ? (this.sowing.crop_name?.name || "")
                 : (this.sowing?.crop_name || "");
         if (!name.trim()) return null;
 
-        const cropsApi = new CropsRecomendationApiService();  // ⬅️ AQUÍ EL NUEVO SERVICE
+        const cropsApi = new CropsRecomendationApiService();
         const resp = await cropsApi.create({ name: name.trim(), description: "" });
         return resp?.data?.id ?? null;
       };
@@ -226,7 +223,6 @@ export default {
       this.changePhaseDialogVisible = false;
     },
 
-    // -------- Update sowing con creación previa del crop si hace falta --------
     async updateSowing() {
       const name = (typeof this.sowing?.crop_name === "object"
           ? (this.sowing.crop_name?.name || "")
@@ -260,7 +256,6 @@ export default {
 
     deleteSowing() {
       console.log("Deleting sowing with ID:", this.sowing.id);
-      // Asegúrate de tener DELETE en tu backend para que esto funcione
       this.sowingService
           .delete(this.sowing.id)
           .then(() => {

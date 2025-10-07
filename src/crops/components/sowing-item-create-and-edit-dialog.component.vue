@@ -3,7 +3,7 @@ export default {
   name: 'SowingItemCreateAndEditDialog',
   props: {
     entity: { type: Object, required: true },
-    visible: { type: Boolean, default: false },   // viene del padre
+    visible: { type: Boolean, default: false },
     entityName: { type: String, default: 'Sowing' },
     edit: { type: Boolean, default: false }
   },
@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     onCancel() {
-      this.$emit('update:visible', false); // cierra el modal en el padre
+      this.$emit('update:visible', false);
       this.$emit('canceled');
     },
     onSave() {
@@ -37,7 +37,7 @@ export default {
         crop_name: this.local.crop_name,
         area_land: Number(this.local.area_land)
       });
-      this.$emit('update:visible', false); // cierra al guardar
+      this.$emit('update:visible', false);
     }
   }
 };
