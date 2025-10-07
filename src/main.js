@@ -1,4 +1,3 @@
-
 import { createApp } from 'vue'
 import './style.css'
 import App from './app.vue'
@@ -9,8 +8,11 @@ import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import Card from "primevue/card";
+import VueApexCharts from 'vue3-apexcharts'
+import ApexCharts from 'apexcharts'
 
-import Aura from '@primeuix/themes/aura'
+import 'primevue/resources/themes/saga-blue/theme.css';
+import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 
@@ -42,16 +44,14 @@ import Divider from "primevue/divider";
 import SelectButton from "primevue/selectbutton";
 import Password from "primevue/password";
 import i18n from "./i18n.js";
-import VueApexCharts from 'vue3-apexcharts';
+import {createPinia} from "pinia";
+
+const pinia = createPinia();
 
 createApp(App)
     .use(router)
-    .use(PrimeVue, {
-        ripple: true,
-        theme: {
-            preset: Aura
-        }
-    })
+    .use(pinia)
+    .use(PrimeVue, {ripple: true})
     .use(DialogService)
     .use(ToastService)
     .use(ConfirmationService)
