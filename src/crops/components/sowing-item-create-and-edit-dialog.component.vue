@@ -1,72 +1,86 @@
 <script>
-
-const defaultStyle = { width: '450px'};
-
 export default {
-  name: "sowing-item-create-and-edit-dialog",
-  props: { entity: null, visible: Boolean, entityName: '', edit: Boolean, size: 'default' },
-
-
+  name: 'SowingItemCreateAndEditDialog',
+  props: {
+    entity: { type: Object, required: true },
+    visible: { type: Boolean, default: false },   // viene del padre
+    entityName: { type: String, default: 'Sowing' },
+    edit: { type: Boolean, default: false }
+  },
+  emits: ['canceled', 'saved', 'update:visible'],
+  data() {
+    return {
+      local: {
+        crop_name: this.entity?.crop_name ?? "",
+        area_land: Number(this.entity?.area_land ?? 0)
+      }
+    };
+  },
+  watch: {
+    entity: {
+      immediate: true,
+      deep: true,
+      handler(v) {
+        this.local.crop_name = v?.crop_name ?? "";
+        this.local.area_land = Number(v?.area_land ?? 0);
+      }
+    }
+  },
   methods: {
-    onSave() {
-      this.$emit('saved', this.entity);
-    },
     onCancel() {
+      this.$emit('update:visible', false); // cierra el modal en el padre
       this.$emit('canceled');
     },
-    getHeaderTitle() {
-      return `${this.edit ? 'Edit' : 'New'} ${this.entityName}`;
-    },
-    getSubmitLabel() {
-      return this.edit ? 'Update' : 'Create';
-    },
-    getDialogStyle() {
-      let dialogStyle = defaultStyle;
-      dialogStyle = this.size === 'standard' ? { width: '600px'} : defaultStyle;
-      dialogStyle = this.size === 'large' ? { width: '900px'} : defaultStyle;
-      return dialogStyle;
+    onSave() {
+      this.$emit('saved', {
+        ...this.entity,
+        crop_name: this.local.crop_name,
+        area_land: Number(this.local.area_land)
+      });
+      this.$emit('update:visible', false); // cierra al guardar
     }
-
   }
-}
+};
 </script>
 
 <template>
-  <pv-dialog v-bind:visible="visible" :modal="true" :style="getDialogStyle()" class="p-fluid" :header="entityName">
-    <template #header>
-      <div class="flex justify-content-start">
-        <div>{{ getHeaderTitle() }}</div>
-      </div>
-    </template>
-    <div class="p-fluid">
-      <div class="field mt-5">
-        <pv-float-label>
-          <label for="crop_name">{{$t('cropName')}}</label>
-          <pv-input-text id="crop_name" v-model="entity.crop_name" :class="{'p-invalid':!entity.crop_name}"/>
-          <small v-if="!entity.crop_name" class="p-invalid">{{$t('cropNameRequired')}}</small>
-        </pv-float-label>
-      </div>
-      <div class="p-field mt-5">
-        <pv-float-label>
-          <label for="area_land">{{$t('areaLand')}}</label>
-          <input id="area_land" v-model="entity.area_land" class="p-inputtext p-component" type="number"/>
-        </pv-float-label>
-      </div>
+  <pv-dialog
+      :visible="visible"
+  :modal="true"
+  :draggable="false"
+  :closable="true"
+  :dismissableMask="true"
+  class="p-fluid"
+  :header="entityName"
+  @hide="onCancel"
+  >
+  <div class="p-fluid">
+    <div class="field mt-3">
+      <label class="mb-2">Crop Name</label>
+      <pv-input-text
+          v-model="local.crop_name"
+          placeholder="Crop Name"
+          class="w-full"
+          :class="{ 'p-invalid': !local.crop_name || !local.crop_name.trim() }"
+      />
+      <small v-if="!local.crop_name || !local.crop_name.trim()" class="p-error">
+        Crop Name is required
+      </small>
     </div>
-    <template #footer>
-      <div class="flex justify-content-end">
-        <pv-button type="button" :label="getSubmitLabel()" class="p-button-text button-green" icon="pi pi-check" @click="onSave"/>
-        <pv-button type="button" label="Cancel" severity="secondary" class="p-button-text button-brown" icon="pi pi-times" @click="onCancel"/>
-      </div>
-    </template>
+
+    <div class="field mt-4">
+      <label class="mb-2">Area(m2)</label>
+      <pv-input-number v-model.number="local.area_land" inputId="area_land" class="w-full" :min="1" />
+    </div>
+  </div>
+
+  <template #footer>
+    <div class="flex justify-content-end gap-2">
+      <pv-button type="button" label="save" class="button-green" icon="pi pi-check" @click="onSave" />
+      <pv-button type="button" label="cancel" severity="secondary" class="button-brown" icon="pi pi-times" @click="onCancel" />
+    </div>
+  </template>
   </pv-dialog>
-
-
 </template>
 
-
-
-
-<style scoped>
-
-</style>
+<style scoped></style>
