@@ -4,6 +4,7 @@ import CustomTable from "./custom-table.component.vue";
 
 export default {
   components: {CustomTable},
+  name: 'crop-care',
   data() {
     return {
       date: null,
