@@ -31,28 +31,23 @@ export class Sowing {
         let cropName = '';
 
         try {
-            const cropResponse = await cropApiService.getCropById(sowing?.cropId);
-            cropName = cropResponse?.data?.name ?? '';
+            const cropResponse = await cropApiService.getCropById(sowing.cropId);
+            cropName = cropResponse.data.name;
         } catch (error) {
             console.error('Error fetching crop name:', error);
         }
 
-        const phaseNames = ['Germination', 'Seedling', 'VegetativeGrowth', 'Flowering', 'HarvestReady'];
-        const idx = Number.isInteger(sowing?.phenologicalPhase) ? sowing.phenologicalPhase : 0;
-        const safePhase = phaseNames[idx] ?? phaseNames[0];
-
-        const start = sowing?.startDate ? moment(sowing.startDate).format('YYYY-MM-DD') : '';
-        const end   = sowing?.endDate   ? moment(sowing.endDate).format('YYYY-MM-DD')   : '';
+        const phenologicalPhaseNames = ['Germination', 'Seedling', 'VegetativeGrowth', 'Flowering', 'HarvestReady'];
 
         return {
-            id: sowing?.id,
-            start_date: start,
-            harvest_date: end,
-            area_land: sowing?.areaLand ?? 0,
-            user_id: sowing?.userId ?? '',
-            crop_id: sowing?.cropId ?? '',
+            id: sowing.id,
+            start_date: moment(sowing.startDate).format('YYYY-MM-DD'),
+            harvest_date: moment(sowing.endDate).format('YYYY-MM-DD'),  // Map endDate to harvest_date
+            area_land: sowing.areaLand,
+            user_id: sowing.userId,
+            crop_id: sowing.cropId,
             crop_name: cropName,
-            phenological_phase: safePhase
+            phenological_phase: phenologicalPhaseNames[sowing.phenologicalPhase]
         };
     }
 }

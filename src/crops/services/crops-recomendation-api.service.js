@@ -1,13 +1,13 @@
-import http from "../../shared/services/http-common.js";
+import http from "/src/shared/services/http-common.js";
 
 export class CropsRecomendationApiService {
-    getCropById(id) {
-        return http.get(`/crops/${id}`);
+
+    getAllCrops(){
+        return http.get('/crops-management/crops');
     }
-    getById(id) {
-        return this.getCropById(id);
-    }
-    create(payload) {
-        return http.post(`/crops`, payload);
+
+    getCropById(id){
+        return http.get(`/crops-management/crops/${id}`);
     }
 }
+
