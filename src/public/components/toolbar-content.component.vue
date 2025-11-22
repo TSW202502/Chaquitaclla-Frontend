@@ -10,10 +10,10 @@ export default {
       isLoggedIn: false,
     };
   },
-  methods: {
-    login() { this.isLoggedIn = true; },
-    logout() { this.isLoggedIn = false; },
-  },
+    methods: {
+      login() { this.isLoggedIn = true; },
+      logout() { this.isLoggedIn = false; },
+    },
 }
 </script>
 
@@ -27,16 +27,16 @@ export default {
 
     <template #center >
       <div class="toolbar-section center-start ">
-        <router-link to="/control-panel">
-          <pv-button class="bg-transparent mr-4">
-            <p>{{ $t('toolbarControlPanel') }}</p>
-          </pv-button>
-        </router-link>
-        <router-link to="/crop-list-and-registration">
-          <pv-button class="bg-transparent mr-4">
-            <p>{{ $t('toolbarCropsRegistration')}}</p>
-          </pv-button>
-        </router-link>
+          <router-link to="/control-panel">
+            <pv-button class="bg-transparent mr-4">
+              <p>{{ $t('toolbarControlPanel') }}</p>
+            </pv-button>
+          </router-link>
+          <router-link to="/crop-list-and-registration">
+            <pv-button class="bg-transparent mr-4">
+              <p>{{ $t('toolbarCropsRegistration')}}</p>
+            </pv-button>
+          </router-link>
       </div>
 
     </template>
@@ -62,14 +62,14 @@ export default {
 
 
 .user {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   align-items: center;
-  font-size: 1rem;
-  padding: 0.5rem;
-  height: auto !important;
-  width: auto !important;
+    font-size: 1rem;
+    padding: 0.5rem;
+    height: auto !important;
+    width: auto !important;
   transform: none !important;
 }
 

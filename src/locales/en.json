@@ -1,5 +1,4 @@
 {
-
   "toolbarControlPanel": "Control Panel",
   "toolbarCropsRegistration": "Crops Registration",
   "seasonCropRecommendation": "Season's crop recommendation",
@@ -32,5 +31,4 @@
   "categoryQuestion":"Category",
   "cropInformationManagement":"Crop Information Management",
   "consultationForum":"Consultation Forum"
-
 }

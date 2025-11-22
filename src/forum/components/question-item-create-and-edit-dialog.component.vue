@@ -1,12 +1,10 @@
 <script>
 
+
 const defaultStyle = { width: '450px'};
-
 export default {
-  name: "sowing-item-create-and-edit-dialog",
+  name: "question-item-create-and-edit-dialog",
   props: { entity: null, visible: Boolean, entityName: '', edit: Boolean, size: 'default' },
-
-
   methods: {
     onSave() {
       this.$emit('saved', this.entity);
@@ -32,7 +30,9 @@ export default {
 </script>
 
 <template>
-  <pv-dialog v-bind:visible="visible" :modal="true" :style="getDialogStyle()" class="p-fluid" :header="entityName">
+  <!-- Create / Update Dialog -->
+
+  <pv-dialog v-bind:visible="visible" :modal="true"  :style="getDialogStyle()" class="p-fluid" :header="entityName" :closable="true" @hide="onCancel">
     <template #header>
       <div class="flex justify-content-start">
         <div>{{ getHeaderTitle() }}</div>
@@ -41,15 +41,14 @@ export default {
     <div class="p-fluid">
       <div class="field mt-5">
         <pv-float-label>
-          <label for="crop_name">{{$t('cropName')}}</label>
-          <pv-input-text id="crop_name" v-model="entity.crop_name" :class="{'p-invalid':!entity.crop_name}"/>
-          <small v-if="!entity.crop_name" class="p-invalid">{{$t('cropNameRequired')}}</small>
+          <label for="category">{{$t('categoryQuestion')}}</label>
+          <pv-input-text id="category" v-model="entity.category" :class="{'p-invalid':!entity.category}"/>
         </pv-float-label>
       </div>
-      <div class="p-field mt-5">
+      <div class="field mt-5">
         <pv-float-label>
-          <label for="area_land">{{$t('areaLand')}}</label>
-          <input id="area_land" v-model="entity.area_land" class="p-inputtext p-component" type="number"/>
+          <label for="ask">{{$t('askQuestion')}}</label>
+          <pv-text-area id="ask" v-model="entity.ask" :class="{'p-invalid':!entity.ask}"/>
         </pv-float-label>
       </div>
     </div>
@@ -61,10 +60,7 @@ export default {
     </template>
   </pv-dialog>
 
-
 </template>
-
-
 
 
 <style scoped>

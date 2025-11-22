@@ -1,14 +1,16 @@
 <script>
+
 import ToolbarContent from "./public/components/toolbar-content.component.vue";
+import ControlPanelPage
+  from "./public/pages/control-panel/components/control-panel-page.component.vue";
 
 export default {
   name: "app",
-  components: {ToolbarContent},
+  components: {ControlPanelPage, ToolbarContent},
 }
 </script>
 
 <template>
-
   <div class="app-container">
     <toolbar-content></toolbar-content>
     <div class="content-container">
@@ -19,14 +21,12 @@ export default {
 </template>
 
 <style scoped>
-
 .app-container {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .content-container {
-margin-top: 64px;
+  margin-top: 64px;
 }
-
 </style>

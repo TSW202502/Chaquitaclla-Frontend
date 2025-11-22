@@ -3,43 +3,23 @@ import http from "../../shared/services/http-common.js";
 export class SowingsApiService{
 
     getAll(){
-        return http.get("/crops-management/sowings");
-    }
-    getAllFalse(){
-        return http.get("/crops-management/sowings/?status=false");
-
+        return http.get("/crops/sowings");
     }
     getById(id) {
-        return http.get(`/crops-management/crops/sowings/${id}`);
+        return http.get(`/crops/sowings/${id}`);
     }
-    create(sowingResource) {
-        return http.post('/crops-management/sowings', sowingResource);
+    create(tutorialResource) {
+        return http.post('/crops/sowings', tutorialResource);
     }
 
     update(id, tutorialResource) {
-        return http.put(`/crops-management/sowings/${id}`, tutorialResource);
-    }
-    updatePhenologicalPhase(id) {
-        return http.put(`/crops-management/sowings/${id}/phenologicalphase`);
-    }
-    updateSowing(sowing){
-        return new Promise((resolve,reject) =>{
-            http.put(`/crops-management/sowings/${sowing.id}`, sowing)
-                .then(response => {
-                    console.log('Update request successful:', response);
-                    resolve(response);
-                })
-                .catch(error => {
-                    console.error('Error in update request:', error);
-                    reject(error);
-                });
-        });
+        return http.put(`/crops/sowings/${id}`, tutorialResource);
     }
 
     delete(id) {
         console.log('Sending delete request for sowing with ID:', id);
 
-        return http.delete(`/crops-management/sowings/${id}`)
+        return http.delete(`/crops/sowings/${id}`)
             .then((response) => {
                 console.log('Delete request successful:', response);
                 return response;
@@ -51,6 +31,6 @@ export class SowingsApiService{
     }
 
     findByTitle(title) {
-        return http.get(`/crops-management/crops/sowings?title=${title}`);
+        return http.get(`/crops/sowings?title=${title}`);
     }
 }

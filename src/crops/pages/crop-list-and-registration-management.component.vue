@@ -22,23 +22,9 @@ export default {
       isEdit: false,
       submitted: false,
       selectedSowingId: null,
-      historyService: null
     }
   },
   methods:{
-    reloadData() {
-      this.sowingService.getAllFalse()
-          .then((response) => {
-            let sowings = response.data;
-            return Promise.all(sowings.map((sowing) => Sowing.toDisplayableSowing(sowing)));
-          })
-          .then((processedSowings) => {
-            this.sowings = processedSowings;
-          })
-          .catch((error) => {
-            console.error('Error fetching data:', error);
-          });
-    },
 
     initFilters() {
       this.filters = {global: {value: null, matchMode: FilterMatchMode.CONTAINS}};
@@ -48,7 +34,7 @@ export default {
     },
 
     onNewItemEventHandler() {
-      this.sowing = {};
+      this.sowing = { area_land: 50 };
       this.submitted = false;
       this.isEdit = false;
       this.createAndEditDialogIsVisible = true;
@@ -72,15 +58,12 @@ export default {
     },
 
     onSavedEventHandler(item) {
-      console.log(item);
       this.submitted = true;
-      if (this.sowing.crop_name.name.trim()) {
+      if (this.sowing.crop_name.trim()) {
         if (this.sowing.area_land <= 0) {
           this.sowing.area_land = 50;
         }
-        console.log('item');
-        console.log(item.id);
-        if (item.id && typeof item.id === 'number') {
+        if (item.id) {
           this.updateSowing();
         } else {
           this.createSowing();
@@ -95,99 +78,62 @@ export default {
       this.$router.push({ name: 'crop-information', params: { id: this.selectedSowingId }});
     },
     createSowing() {
-      this.sowing.id = "";
+  this.sowing.id = 0;
 
-      let currentDate = new Date();
-      this.sowing.start_date = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()).toISOString().split('T')[0];
+  let currentDate = new Date();
+  this.sowing.start_date = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()).toISOString().split('T')[0];
 
-      let harvestDate = new Date(currentDate.setMonth(currentDate.getMonth() + 4));
-      this.sowing.harvest_date = new Date(harvestDate.getFullYear(), harvestDate.getMonth(), harvestDate.getDate()).toISOString().split('T')[0];
+  let harvestDate = new Date(currentDate.setMonth(currentDate.getMonth() + 4));
+  this.sowing.harvest_date = new Date(harvestDate.getFullYear(), harvestDate.getMonth(), harvestDate.getDate()).toISOString().split('T')[0];
 
-      this.sowing.user_id = 1;
-
-      this.sowing.crop_id = this.sowing.crop_name.id;
-      this.sowing.crop_name = this.sowing.crop_name.name;
-
-      this.sowing = Sowing.fromDisplayableSowing(this.sowing);
-      let sowingResource =  {
-        areaLand: this.sowing.area_land,
-        cropId: this.sowing.crop_id
-      }
-      console.log(sowingResource);
-      this.sowingService.create(sowingResource)
-          .then((response) => {
-            this.sowing = Sowing.toDisplayableSowing(response.data);
-            this.sowings.push(this.sowing);
-            this.reloadData();
-          });
-    },
+  this.sowing.user_id = 1;
+  this.sowing.phenological_phase = "Germination";
+  this.sowing = Sowing.fromDisplayableSowing(this.sowing);
+  console.log(this.sowing);
+  this.sowingService.create(this.sowing)
+      .then((response) => {
+        this.sowing = Sowing.toDisplayableSowing(response.data);
+        this.sowings.push(this.sowing);
+      });
+},
 
     changePhenologicalPhase(sowing) {
-  this.sowing = sowing;
-  this.changePhaseDialogVisible = true;
-},
-
-onPhaseChangeConfirmed() {
-  const phaseValues = {
-    'Germination': 0,
-    'Seedling': 1,
-    'VegetativeGrowth': 2,
-    'Flowering': 3,
-    'HarvestReady': 4
-  };
-  const phaseNames = ['Germination', 'Seedling', 'VegetativeGrowth', 'Flowering', 'HarvestReady'];
-  let phaseValue = phaseValues[this.sowing.phenological_phase];
-
-  if (phaseValue < 4) {
-    phaseValue++;
-  }
-  this.sowing.phenological_phase = phaseNames[phaseValue];
-
-  // Actualizar el sowing en la base de datos
-  this.sowingService.updatePhenologicalPhase(this.sowing.id)
-    .then(() => {
-      console.log('Sowing updated');
-      this.reloadData();
-    })
-    .catch((error) => {
-      console.error('Error updating sowing:', error);
-    });
-
-  this.changePhaseDialogVisible = false;
-  if (this.sowing.phenological_phase === 'HarvestReady') {
-    this.historyService.addToHistory(this.sowing)
-      .then(() => {
-        console.log('Sowing added to history');
-      })
-      .catch((error) => {
-        console.error('Error adding sowing to history:', error);
-      });
-  }
-},
+      this.sowing = sowing;
+      this.changePhaseDialogVisible = true;
+    },
     onPhaseChangeCanceled() {
+      this.changePhaseDialogVisible = false;
+    },
+    onPhaseChangeConfirmed() {
+      if (this.sowing.phenological_phase === 'Germination') {
+        this.sowing.phenological_phase = 'Seedling';
+      } else if (this.sowing.phenological_phase === 'Seedling') {
+        this.sowing.phenological_phase = 'VegetativeGrowth';
+      } else if (this.sowing.phenological_phase === 'VegetativeGrowth') {
+        this.sowing.phenological_phase = 'Flowering';
+      } else if (this.sowing.phenological_phase === 'Flowering') {
+        this.sowing.phenological_phase = 'HarvestReady';
+      }
+      this.updateSowing();
       this.changePhaseDialogVisible = false;
     },
 
     updateSowing() {
       this.sowing = Sowing.fromDisplayableSowing(this.sowing);
-      const updateResource = {
-        areaLand: this.sowing.area_land,
-        cropId: this.sowing.crop_name.id
-      };
-      console.log(updateResource);
       this.sowingService
-          .update(this.sowing.id, updateResource)
+          .update(this.sowing.id, this.sowing)
           .then((response) => {
-            this.reloadData();
+            this.sowings[this.findIndexById(response.data.id)] =
+                Sowing.toDisplayableSowing(response.data);
           });
     },
 
     deleteSowing() {
-      console.log('Deleting sowing with ID:', this.sowing.crop_name.id);
+      console.log('Deleting sowing with ID:', this.sowing.id);
 
       this.sowingService.delete(this.sowing.id)
           .then(() => {
-            this.reloadData();
+            this.sowings = this.sowings.filter((s) => s.id !== this.sowing.id);
             this.sowing = {};
           })
           .catch((error) => {
@@ -197,21 +143,13 @@ onPhaseChangeConfirmed() {
   },
 
   created(){
-    console.log('Tabla creada');
     this.sowingService = new SowingsApiService();
 
-    this.sowingService.getAllFalse()
+    this.sowingService.getAll()
         .then((response) => {
-          console.log('Raw sowings data:', response.data);  // Log raw data
+          console.log(response.data);
           let sowings = response.data;
-          return Promise.all(sowings.map((sowing) => Sowing.toDisplayableSowing(sowing)));
-        })
-        .then((processedSowings) => {
-          this.sowings = processedSowings;
-          console.log('Processed sowings data:', this.sowings);  // Log processed data
-        })
-        .catch((error) => {
-          console.error('Error fetching data:', error);
+          this.sowings = sowings.map((sowing) => Sowing.toDisplayableSowing(sowing));
         });
 
     this.initFilters();
@@ -254,8 +192,10 @@ onPhaseChangeConfirmed() {
       <pv-column field="crop_name" header="Crop" style="min-width:8rem"></pv-column>
       <pv-column field="start_date" header="Planted Date" style="min-width:15rem"></pv-column>
       <pv-column field="harvest_date" header="Harvest Date" style="min-width:15rem"></pv-column>
-      <pv-column field="phenological_phase" header="Phenological Phase" style="min-width:12rem">
-      </pv-column>      <pv-column header="Actions" :exportable="false" style="min-width:8rem">
+      <pv-column field="phenological_phase" header="Phenological Phase" style="min-width:12rem"></pv-column>
+      <pv-column field="area_land" header="Planted Area (m2)" style="min-width:10rem"></pv-column>
+
+      <pv-column header="Actions" :exportable="false" style="min-width:8rem">
         <template #body="slotProps">
           <pv-button icon="pi pi-exclamation-triangle" outlined rounded class="mr-2" @click="changePhenologicalPhase(slotProps.data)" />
           <pv-button icon="pi pi-pencil" outlined rounded class="mr-2" @click="onEditItemEventHandler(slotProps.data)" />
@@ -266,16 +206,6 @@ onPhaseChangeConfirmed() {
     </pv-data-table>
   </div>
   <change-phase-dialog :visible.sync="changePhaseDialogVisible" @canceled="onPhaseChangeCanceled" @confirmed="onPhaseChangeConfirmed" />
-
-  <sowing-item-create-and-edit-dialog
-      :entity="sowing"
-      :visible="createAndEditDialogIsVisible"
-      entityName="Sowing"
-      :edit="isEdit"
-      v-on:canceled="onCanceledEventHandler"
-      v-on:saved="onSavedEventHandler($event)"
-  />
-
 </template>
 
 <style scoped>
