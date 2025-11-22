@@ -8,7 +8,7 @@ import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import Card from "primevue/card";
-import VueBarGraph from 'vue-bar-graph';
+import * as VueBarGraph from 'vue-bar-graph';
 import VueApexCharts from 'vue3-apexcharts'
 import ApexCharts from 'apexcharts'
 
