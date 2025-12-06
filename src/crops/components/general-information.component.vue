@@ -1,6 +1,6 @@
 <script>
 import { SowingsApiService } from "../services/sowings-api.service.js";
-
+import { CropsRecomendationApiService } from "../services/crops-recomendation-api.service.js";
 export default {
   name: 'GeneralInformation',
   props: ['sowingId'],
@@ -25,14 +25,29 @@ export default {
         return;
       }
       const sowingService = new SowingsApiService();
+      const cropApiService = new CropsRecomendationApiService();
       sowingService.getById(this.sowingId)
           .then((response) => {
             this.sowing = response.data;
+            console.log('Received sowing:', this.sowing);
+            if (!this.sowing.cropId) {
+              throw new Error('Crop ID is undefined');
+            }
+            return cropApiService.getCropById(this.sowing.cropId);
+          })
+          .then((response) => {
+            this.sowing.crop_info = response.data;
+            console.log('Received crop:', this.sowing.crop_info);
+            const dateParts = this.sowing.startDate.split('T');
+            const dateOnly = dateParts[0];
             this.rows = [
-              ['Crop Name', this.sowing.crop_name],
-              ['Date Created', this.sowing.start_date],
-              ['Planted Area (m2)', this.sowing.area_land]
+              ['Crop Name', this.sowing.crop_info.name],
+              ['Date Created', dateOnly],
+              ['Planted Area (m2)', this.sowing.areaLand]
             ];
+          })
+          .catch((error) => {
+            console.error('Error fetching data:', error);
           });
     }
   }
@@ -42,10 +57,10 @@ export default {
 <template>
   <div class="container">
     <div class="image-container">
-      <img class="crop-image" :src="sowing?.crop_info?.image" alt="Crop Image"/>
+      <img :src="sowing?.crop_info?.imageUrl" alt="Crop Image"/>
     </div>
     <div class="labels-container">
-     <div class="row" v-for="(row, index) in rows" :key="index">
+      <div class="row" v-for="(row, index) in rows" :key="index">
         <div class="column" v-for="(label, columnIndex) in row" :key="columnIndex"
              :class="{ 'grey-label': columnIndex % 2 === 0, 'green-label': columnIndex % 2 !== 0 }">
           {{ label }}
@@ -72,6 +87,12 @@ export default {
   margin-right: 50px;
 }
 
+.image-container img {
+  width: 300px;  /* Adjust as needed */
+  height: 300px; /* Adjust as needed */
+  object-fit: cover; /* This will ensure that the image is scaled to fill the container while maintaining its aspect ratio */
+}
+
 .labels-container {
   flex: 1;
   margin-top: auto;
@@ -79,7 +100,6 @@ export default {
   margin-left: 50px;
   display: flex;
   flex-direction: column;
-
 }
 
 .row {
@@ -104,16 +124,11 @@ export default {
   color: white;
 }
 
-.description{
+.description {
   background-color: #005f40;
   color: white;
   padding: 10px 20px;
   text-align: center;
   border-radius: 5px;
-}
-.crop-image {
-  width: 400px;
-  height: 400px;
-  border-radius: 20px;
 }
 </style>

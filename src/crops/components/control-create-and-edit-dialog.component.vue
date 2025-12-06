@@ -9,22 +9,22 @@
       <div class="field mt-5">
         <pv-float-label>
           <label for="leave">{{$t('leaveDescription')}}</label>
-          <pv-input-text id="leave" v-model="entity.leave" :class="{'p-invalid':!entity.leave}"/>
-          <small v-if="!entity.leave" class="p-invalid">{{$t('leaveDescriptionRequired')}}</small>
+          <pv-dropdown id="leave" :options="conditions" v-model="entity.sowingCondition" :class="{'p-invalid':!entity.sowingCondition}"/>
+          <small v-if="!entity.sowingCondition" class="p-invalid">{{$t('leaveDescriptionRequired')}}</small>
         </pv-float-label>
       </div>
       <div class="p-field mt-5">
         <pv-float-label>
           <label for="stem">{{$t('stemDescription')}}</label>
-          <pv-input-text id="stem" v-model="entity.stem" :class="{'p-invalid':!entity.stem}"/>
-          <small v-if="!entity.stem" class="p-invalid">{{$t('stemDescriptionRequired')}}</small>
+          <pv-dropdown id="stem" :options="conditions" v-model="entity.stemCondition" :class="{'p-invalid':!entity.stemCondition}"/>
+          <small v-if="!entity.stemCondition" class="p-invalid">{{$t('stemDescriptionRequired')}}</small>
         </pv-float-label>
       </div>
       <div class="p-field mt-5">
         <pv-float-label>
           <label for="soil">{{$t('soilDescription')}}</label>
-          <pv-input-text id="soil" v-model="entity.soil" :class="{'p-invalid':!entity.soil}"/>
-          <small v-if="!entity.soil" class="p-invalid">{{$t('soilDescriptionRequired')}}</small>
+          <pv-dropdown id="soil" :options="conditions" v-model="entity.soilMoisture" :class="{'p-invalid':!entity.soilMoisture}"/>
+          <small v-if="!entity.soilMoisture" class="p-invalid">{{$t('soilDescriptionRequired')}}</small>
         </pv-float-label>
       </div>
     </div>
@@ -44,6 +44,11 @@ const defaultStyle = { width: '450px'};
 export default {
   name: "control-create-and-edit-dialog",
   props: { entity: null, visible: Boolean, entityName: '', edit: Boolean, size: 'default' },
+  data() {
+    return {
+      conditions: ['Dry', 'Moist', 'Normal'],
+    };
+  },
   methods: {
     onSave() {
       this.$emit('saved', this.entity);

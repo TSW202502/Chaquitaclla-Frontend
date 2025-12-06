@@ -2,6 +2,10 @@ import http from "../../shared/services/http-common.js";
 
 export class ForumApiService{
 
+    getAllProfiles(){
+        return http.get("/profiles");
+    }
+
     getAllQuestions(){
         return http.get("/forum/questions");
     }
@@ -11,7 +15,7 @@ export class ForumApiService{
     }
 
     updateQuestion(id,question){
-        return http.put("/forum/questions/${id}",question);
+        return http.put(`/forum/questions/${id}`,question);
     }
 
     deleteQuestion(id){
@@ -36,9 +40,13 @@ export class ForumApiService{
         return http.get(`/forum/answers/${id}`);
     }
     getAnswerByQuestionId(id){
-        return http.get(`/forum/answers/?questionId=${id}`);
+        return http.get(`/forum/question/${id}/answers`);
     }
     createAnswer(answer){
         return http.post("/forum/answers",answer);
+    }
+
+    getAllCategories(){
+        return http().get('/forum/categories');
     }
 }

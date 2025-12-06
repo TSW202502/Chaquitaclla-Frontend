@@ -1,0 +1,281 @@
+{
+  "sowings": [
+    {
+      "id": 1,
+      "start_date": "2024-07-19",
+      "harvest_date": "2024-10-19",
+      "area_land": 500,
+      "user_id": 1,
+      "crop_id": 1,
+      "crop_name": "Lemon",
+      "crop_info": {
+        "id": 1,
+        "name": "Lemon",
+        "image": "",
+        "description": "Lemon is a type of citrus fruit. The fruit, juice, and peel are used to make medicine. Lemon is used to treat scurvy, a condition caused by not having enough vitamin C. Lemon is also used for the common cold and flu, H1N1 (swine) flu, ringing in the ears (tinnitus), Meniere's disease, and kidney stones.",
+        "type_name": "Fruit"
+      },
+      "phenological_phase": "Germination",
+      "controls": [
+        {
+          "id": 1,
+          "date": "2024-07-25",
+          "leave": "It presents two spots on the wrinkles",
+          "stem": "The stems are green and strong",
+          "soil": "The soil is moist"
+        },
+        {
+          "id": 2,
+          "date": "2024-08-05",
+          "leave": "No stains or wrinkles",
+          "stem": "The stems are green and strong",
+          "soil": "The soil is moist"
+        },
+        {
+          "id": 3,
+          "date": "2024-08-15",
+          "leave": "It presents five spots",
+          "stem": "The stems are green and strong",
+          "soil": "The soil is moist"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start_date": "2024-07-19",
+      "harvest_date": "2024-10-19",
+      "area_land": 1000,
+      "user_id": 1,
+      "crop_id": 1,
+      "crop_name": "Lemon",
+      "crop_info": {
+        "id": 1,
+        "name": "Lemon",
+        "image": "",
+        "description": "Lemon is a type of citrus fruit. The fruit, juice, and peel are used to make medicine. Lemon is used to treat scurvy, a condition caused by not having enough vitamin C. Lemon is also used for the common cold and flu, H1N1 (swine) flu, ringing in the ears (tinnitus), Meniere's disease, and kidney stones.",
+        "type_name": "Fruit"
+      },
+      "phenological_phase": "Germination",
+      "controls": []
+    },
+    {
+      "id": 3,
+      "start_date": "2024-07-19",
+      "harvest_date": "2024-10-19",
+      "area_land": 1200,
+      "user_id": 1,
+      "crop_id": 2,
+      "crop_name": "Rice",
+      "crop_info": {
+        "name": "Rice",
+        "image": "",
+        "description": "Rice is the seed of the grass species Oryza sativa (Asian rice) or less commonly Oryza glaberrima (African rice). As a cereal grain, it is the most widely consumed staple food for a large part of the world's human population, especially in Asia and Africa. It is the agricultural commodity with the third-highest worldwide production (rice, 741.5 million tonnes in 2014), after sugarcane (1.9 billion tonnes) and maize (1.0 billion tonnes).",
+        "type_name": "Cereal"
+      },
+      "phenological_phase": "Germination",
+      "controls": []
+    },
+    {
+      "id": 4,
+      "start_date": "2024-07-19",
+      "harvest_date": "2024-10-19",
+      "area_land": 1500,
+      "user_id": 1,
+      "crop_id": 1,
+      "crop_name": "Lemon",
+      "crop_info": {
+        "id": 1,
+        "name": "Lemon",
+        "image": "",
+        "description": "Lemon is a type of citrus fruit. The fruit, juice, and peel are used to make medicine. Lemon is used to treat scurvy, a condition caused by not having enough vitamin C. Lemon is also used for the common cold and flu, H1N1 (swine) flu, ringing in the ears (tinnitus), Meniere's disease, and kidney stones.",
+        "type_name": "Fruit"
+      },
+      "phenological_phase": "Germination",
+      "controls": []
+    }
+  ],
+  "crops": [
+    {
+      "id": 1,
+      "name": "Lemon",
+      "image": "https://t3.ftcdn.net/jpg/02/54/26/16/360_F_254261696_484qlllePzVLFSPCOxHWwJYpSlydUyLP.jpg",
+      "description": "Lemon is a type of citrus fruit. The fruit, juice, and peel are used to make medicine. Lemon is used to treat scurvy, a condition caused by not having enough vitamin C. Lemon is also used for the common cold and flu, H1N1 (swine) flu, ringing in the ears (tinnitus), Meniere's disease, and kidney stones.",
+      "type_name": "Fruit"
+    },
+    {
+      "id": 2,
+      "name": "Rice",
+      "image": "https://cdn.britannica.com/89/140889-050-EC3F00BF/Ripening-heads-rice-Oryza-sativa.jpg",
+      "description": "Rice is the seed of the grass species Oryza sativa (Asian rice) or less commonly Oryza glaberrima (African rice). As a cereal grain, it is the most widely consumed staple food for a large part of the world's human population, especially in Asia and Africa. It is the agricultural commodity with the third-highest worldwide production (rice, 741.5 million tonnes in 2014), after sugarcane (1.9 billion tonnes) and maize (1.0 billion tonnes).",
+      "type_name": "Cereal"
+    }
+  ],
+  "cares": [
+    {
+      "id": 1,
+      "sowing_id": 1,
+      "date": "2024-07-25",
+      "suggestion": "Water the crop for 30 minutes"
+    },
+    {
+      "id": 2,
+      "sowing_id": 1,
+      "date": "2024-08-05",
+      "suggestion": "Water the crop for 30 minutes"
+    },
+    {
+      "id": 3,
+      "sowing_id": 1,
+      "date": "2024-08-15",
+      "suggestion": "Water the crop for 30 minutes"
+    },
+    {
+      "id": 4,
+      "sowing_id": 1,
+      "date": "2024-08-25",
+      "suggestion": "Water the crop for 30 minutes"
+    },
+    {
+      "id": 5,
+      "sowing_id": 1,
+      "date": "2024-08-05",
+      "suggestion": "Water the crop for 30 minutes"
+    },
+    {
+      "id": 6,
+      "sowing_id": 2,
+      "date": "2024-09-15",
+      "suggestion": "Water the crop for 30 minutes"
+    },
+    {
+      "id": 7,
+      "sowing_id": 2,
+      "date": "2024-08-25",
+      "suggestion": "Water the crop for 30 minutes"
+    },
+    {
+      "id": 8,
+      "sowing_id": 2,
+      "date": "2024-09-05",
+      "suggestion": "Water the crop for 30 minutes"
+    },
+    {
+      "id": 9,
+      "sowing_id": 2,
+      "date": "2024-10-15",
+      "suggestion": "Water the crop for 30 minutes"
+    },
+    {
+      "id": 10,
+      "sowing_id": 2,
+      "date": "2024-10-25",
+      "suggestion": "Water the crop for 30 minutes"
+    }
+  ],
+  "diseases": [
+    {
+      "id": 1,
+      "crop_id": 1,
+      "name": "Bacterial stain",
+      "description": "Bacterial disease that causes necrotic spots on leaves, stems and panicles of rice. It can cause seedling death and reduce crop yield.",
+      "solution": "Copper-based fungicides can help control rice bacterial spot. Dosage and application recommendations provided by agricultural experts or local authorities should be followed."
+    },
+    {
+      "id": 2,
+      "crop_id": 1,
+      "name": "Rice beetle",
+      "description": "This beetle feeds on stored rice grains, causing significant damage to warehouses and silos.",
+      "solution": "In cases of severe infestations, it may be necessary to resort to the use of pesticides. Dosage and application recommendations provided by agricultural experts or local authorities should be followed."
+    },
+    {
+      "id": 3,
+      "crop_id": 1,
+      "name": "Rice Moth",
+      "description": "The larvae of this moth feed on rice leaves and stems, creating galleries and causing considerable crop damage.",
+      "solution": "In cases of severe infestations, specific insecticides may be applied. Dosage and application recommendations provided by agricultural experts or local authorities should be followed."
+    },
+    {
+      "id": 4,
+      "crop_id": 1,
+      "name": "Rice blast",
+      "description": "Fungal disease that causes lesions on rice leaves, stems and panicles. It can cause significant crop losses.",
+      "solution": "Fungicides can help control rice blast. Dosage and application recommendations provided by agricultural experts or local authorities should be followed."
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "sowing_id": 1,
+      "date": "2024-07-25",
+      "type": "Fertilizer",
+      "name": "Aminofol Plus",
+      "quantity": "10 kg"
+    },
+    {
+      "id": 2,
+      "sowing_id": 1,
+      "date": "2024-08-05",
+      "type": "Pesticide",
+      "name": "Beta-Baytroide",
+      "quantity": "20 kg"
+    },
+    {
+      "id": 3,
+      "sowing_id": 1,
+      "date": "2024-08-05",
+      "type": "Pesticide",
+      "name": "Beta-Baytroide",
+      "quantity": "20 kg"
+    },
+    {
+      "id": 4,
+      "sowing_id": 2,
+      "date": "2024-09-15",
+      "type": "Fertilizer",
+      "name": "Aminofol Plus",
+      "quantity": "10 kg"
+    },
+    {
+      "id": 5,
+      "sowing_id": 2,
+      "date": "2024-08-25",
+      "type": "Pesticide",
+      "name": "Beta-Baytroide",
+      "quantity": "20 kg"
+    }
+  ],
+
+  "users": [
+    {
+      "id": 1,
+      "name": "Juan",
+      "last_name": "Lopez",
+      "email": "2024-07-25",
+      "password": "Fertilizer",
+      "membership": 1
+    },
+    {
+      "id": 2,
+      "name": "Juan",
+      "last_name": "Lopez",
+      "email": "2024-07-25",
+      "password": "Fertilizer",
+      "membership": 1
+    },
+    {
+      "id": 3,
+      "name": "Juan",
+      "last_name": "Lopez",
+      "email": "2024-07-25",
+      "password": "Fertilizer",
+      "membership": 2
+    },
+    {
+      "id": 4,
+      "name": 1,
+      "email": "2024-07-25",
+      "password": "Fertilizer",
+      "membership": 3
+    }
+  ]
+}

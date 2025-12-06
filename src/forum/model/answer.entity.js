@@ -1,26 +1,26 @@
 export class Answer {
-    constructor(id, questionId, userName, content) {
+    constructor(id, questionId, authorId, answerText) {
         this.id = id;
         this.questionId = questionId;
-        this.userName = userName;
-        this.content = content;
+        this.authorId = authorId;
+        this.answerText = answerText;
     }
 
     static fromDisplayableAnswer(displayableAnswer) {
         return new Answer(
             displayableAnswer.id,
             displayableAnswer.questionId,
-            displayableAnswer.userName,
+            displayableAnswer.authorId,
             displayableAnswer.content
         );
     }
 
     static toDisplayableAnswer(answer) {
         return {
-            id: answer.id,
+            id: answer.answerId,
             questionId: answer.questionId,
-            userName: answer.userName,
-            content: answer.content
+            userName: answer.authorId,
+            content: answer.answerText
         };
     }
 }

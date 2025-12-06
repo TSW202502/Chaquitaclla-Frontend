@@ -1,7 +1,6 @@
 <script>
 import ControlCreateAndEditDialog from "./control-create-and-edit-dialog.component.vue";
-import { SowingsApiService } from '../services/sowings-api.service.js';
-
+import {ControlsApiService} from "../services/controls-api-service.js";
 export default {
   name: 'Controls',
   components: {ControlCreateAndEditDialog},
@@ -12,7 +11,8 @@ export default {
       tableHeaders: ['Date', 'Leave', 'Stem', 'Soil', 'Actions'],
       tableData: [],
       controlDialogVisible: false,
-      newControl: {date: '', leave: '', stem: '', soil: '', sowingId: ''}
+      newControl: {date: '', sowingCondition: '', stemCondition: '', soilMoisture: '', sowingId: ''},
+      conditions: ['Dry', 'Moist', 'Normal'],
     };
   },
   methods: {
@@ -24,16 +24,18 @@ export default {
       this.controlDialogVisible = true;
     },
     onControlSaved(control) {
-      this.tableData.push([control.date, control.leave, control.stem, control.soil]);
-      const sowingsAPI = new SowingsApiService();
-      sowingsAPI.getAll().then(response => {
-        const sowings = response.data;
-        const selectedSowing = sowings.find(sowing => Number(sowing.id) === Number(this.sowingId));
-        if (selectedSowing) {
-          selectedSowing.controls.push(control);
-          sowingsAPI.update(selectedSowing).then(updatedSowing => {
-          });
-        }
+      const controlsAPI = new ControlsApiService();
+      controlsAPI.createControl(this.sowingId, control).then(response => {
+        const createdControl = response.data;
+        this.tableData.push({
+          id: createdControl.id,
+          date: createdControl.date,
+          sowingCondition: createdControl.sowingCondition,
+          stemCondition: createdControl.stemCondition,
+          soilMoisture: createdControl.soilMoisture
+        });
+      }).catch(error => {
+        console.log(error.config);
       });
       this.controlDialogVisible = false;
     },
@@ -41,19 +43,34 @@ export default {
       this.controlDialogVisible = false;
     },
     onDelete(index) {
-      this.tableData.splice(index, 1);
+      const controlToDelete = this.tableData[index];
+      const controlsAPI = new ControlsApiService();
+      controlsAPI.deleteControl(this.sowingId, controlToDelete.id).then(() => {
+        this.tableData = this.tableData.filter((control, controlIndex) => {
+          return controlIndex !== index;
+        });
+      }).catch(error => {
+        console.log(error.config);
+      });
     }
   },
   created() {
-    const sowingsAPI = new SowingsApiService();
-    sowingsAPI.getAll().then(response => {
-      const sowings = response.data;
-      const selectedSowing = sowings.find(sowing => Number(sowing.id) === Number(this.sowingId));
-      if (selectedSowing && selectedSowing.controls) {
-        this.tableData = selectedSowing.controls.map(control => [control.date, control.leave, control.stem, control.soil]);
+    const controlsAPI = new ControlsApiService();
+    controlsAPI.getAllControlsBySowingId(this.sowingId).then(response => {
+      const controls = response.data;
+      if (controls.length) {
+        this.tableData = controls.map(control => {
+          return {
+            id: control.id,
+            date: control.date,
+            sowingCondition: control.sowingCondition,
+            stemCondition: control.stemCondition,
+            soilMoisture: control.soilMoisture
+          };
+        });
       }
     });
-  }
+  },
 };
 </script>
 
@@ -68,7 +85,10 @@ export default {
       </thead>
       <tbody>
       <tr v-for="(row, rowIndex) in tableData" :key="rowIndex" class="custom-table-row">
-        <td v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
+        <td>{{ row.date }}</td>
+        <td>{{ row.sowingCondition }}</td>
+        <td>{{ row.stemCondition }}</td>
+        <td>{{ row.soilMoisture }}</td>
         <td>
           <pv-button icon="pi pi-trash" outlined rounded severity="danger"  @click="onDelete(rowIndex)"></pv-button>
         </td>

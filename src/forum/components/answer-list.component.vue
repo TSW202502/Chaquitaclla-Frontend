@@ -35,9 +35,8 @@ export default {
     },
     createAnswer() {
       this.answer.questionId = this.question.id;
-      this.answer.userName = 'Roberto Juarez';
+      this.answer.authorId = 1;
       this.answer = Answer.fromDisplayableAnswer(this.answer);
-      console.log(this.answer);
       this.forumService.createAnswer(this.answer)
           .then((response) => {
             this.answer = Answer.toDisplayableAnswer(response.data);
@@ -76,6 +75,7 @@ export default {
           .then((response) => {
             let answers = response.data;
             this.answers = answers.map((answer) => Answer.toDisplayableAnswer(answer));
+            console.log(this.answers);
           });
     },
   },

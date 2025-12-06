@@ -4,6 +4,7 @@ import CropCare from "../components/crop-care.component.vue";
 import DiseasesOrPests from "../components/diseases-or-pests.component.vue";
 import ProductsUsed from "../components/products-used.component.vue";
 import Controls from "../components/controls.component.vue";
+import {CropsRecomendationApiService} from "../services/crops-recomendation-api.service.js";
 
 export default {
   name: "crop-information-management",
@@ -11,6 +12,7 @@ export default {
   data() {
     return {
       selectedSowingId: this.$route.params.id,
+      crop: null,
     };
   },
   watch: {
@@ -21,7 +23,7 @@ export default {
         this.selectedSowingId = newVal;
       }
     }
-  },
+  }
 }
 </script>
 
@@ -47,7 +49,6 @@ export default {
     </pv-tab-view>
   </div>
 </template>
-
 
 <style scoped>
 

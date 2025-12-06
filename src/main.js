@@ -8,7 +8,7 @@ import Toolbar from "primevue/toolbar";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import Card from "primevue/card";
-import * as VueBarGraph from 'vue-bar-graph';
+import VueBarGraph from 'vue-bar-graph';
 import VueApexCharts from 'vue3-apexcharts'
 import ApexCharts from 'apexcharts'
 
@@ -45,9 +45,13 @@ import Divider from "primevue/divider";
 import SelectButton from "primevue/selectbutton";
 import Password from "primevue/password";
 import i18n from "./i18n.js";
+import {createPinia} from "pinia";
+
+const pinia = createPinia();
 
 createApp(App)
     .use(router)
+    .use(pinia)
     .use(PrimeVue, {ripple: true})
     .use(DialogService)
     .use(ToastService)
